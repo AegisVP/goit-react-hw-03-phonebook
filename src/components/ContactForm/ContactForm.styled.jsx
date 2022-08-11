@@ -6,6 +6,7 @@ const Button = styled.button`
   padding: ${p => p.theme.mp(2, 1)};
   margin: ${p => p.theme.mp(3, 'auto', 2)};
   font-weight: bold;
+  cursor: pointer;
 
   border: none;
   border-radius: ${p => p.theme.radii.normal};

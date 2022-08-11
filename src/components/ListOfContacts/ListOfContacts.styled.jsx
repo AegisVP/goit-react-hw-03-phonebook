@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+const Button = styled.button`
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+`;
+
 export const List = styled.ul`
   list-style-type: style none;
   padding-left: 0;
@@ -36,14 +42,4 @@ export const Name = styled.p`
 export const Number = styled.p`
   display: none;
   margin: 0 0 0 40px;
-`;
-
-export const EditButton = styled.button`
-  border: none;
-  background-color: transparent;
-`;
-
-export const DeleteButton = styled.button`
-  border: none;
-  background-color: transparent;
 `;

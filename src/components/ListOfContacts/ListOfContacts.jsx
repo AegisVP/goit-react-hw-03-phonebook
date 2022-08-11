@@ -5,8 +5,7 @@ import {
   ListItem,
   Name,
   Number,
-  DeleteButton,
-  EditButton,
+  Button,
 } from 'components/ListOfContacts/ListOfContacts.styled';
 import { PropTypes } from 'prop-types';
 
@@ -22,20 +21,20 @@ export const ListOfContacts = ({ onDeleteContact, onEditContact, contacts }) => 
                 <Number className="number">{contact.number}</Number>
               </Box>
               <Box>
-                <EditButton
+                <Button
                   onClick={() => {
                     onEditContact(contact.id);
                   }}
                 >
                   ✏️
-                </EditButton>
-                <DeleteButton
+                </Button>
+                <Button
                   onClick={() => {
                     onDeleteContact(contact.id);
                   }}
                 >
                   ❌
-                </DeleteButton>
+                </Button>
               </Box>
             </ListItem>
           ))

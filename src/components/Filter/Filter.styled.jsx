@@ -26,6 +26,7 @@ export const Button = styled.button`
     align-items: center;
     width: 20px;
     height: 20px;
+    cursor: pointer;
 
     border:none;
     outline:none;
