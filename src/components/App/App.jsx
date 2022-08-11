@@ -8,6 +8,8 @@ import { ListOfContacts } from 'components/ListOfContacts/ListOfContacts';
 import { FilterForm } from 'components/Filter/Filter';
 import { FormikSelect } from 'components/FormikSelect/FormikSelect';
 
+const LS_KEY = 'phonebook_hw_contacts';
+
 export class App extends Component {
   state = {
     contacts: [
@@ -22,19 +24,34 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const savedContacts = localStorage.getItem(LS_KEY);
+
+    if (!savedContacts) return;
+    const parsedContacts = JSON.parse(savedContacts);
+
+    if (parsedContacts.length === 0) return;
+    this.setState({ contacts: parsedContacts });
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (prevState.contacts.length === this.state.contacts.length) return;
+
+    localStorage.setItem(LS_KEY, JSON.stringify(this.state.contacts));
+  }
+
   onFormikSelect = ({ target: { checked } }) => this.setState({ formikSelected: checked });
 
   onAddContact = ({ name, number }) => {
-    const id = nanoid();
-
     const trimmedName = name.trim();
     const normalizedName = trimmedName.toLocaleLowerCase();
 
-    if (this.state.contacts.some(({name}) => name === normalizedName)) {
+    if (this.state.contacts.some(({ name }) => name.toLocaleLowerCase() === normalizedName)) {
       window.alert('This name already exists in the list!');
       return;
     }
 
+    const id = nanoid();
     this.setState(({ contacts }) => ({ contacts: [...contacts, { id, name: trimmedName, number }] }));
     return id;
   };
@@ -63,20 +80,10 @@ export class App extends Component {
           <Section>
             <FormikSelect onFormikSelect={this.onFormikSelect} />
           </Section>
-          <Section title="Contact info">
-            {this.state.formikSelected ? (
-              <ContactFormFormik onSubmit={this.onAddContact} />
-            ) : (
-              <ContactForm onSubmit={this.onAddContact} />
-            )}
-          </Section>
+          <Section title="Contact info">{this.state.formikSelected ? <ContactFormFormik onSubmit={this.onAddContact} /> : <ContactForm onSubmit={this.onAddContact} />}</Section>
           {this.state.contacts.length > 0 && (
             <Section>
-              <FilterForm
-                filterValue={this.state.filter}
-                onClear={this.clearFilterField}
-                onChange={this.onFilterContacts}
-              />
+              <FilterForm filterValue={this.state.filter} onClear={this.clearFilterField} onChange={this.onFilterContacts} />
             </Section>
           )}
         </Box>
@@ -84,11 +91,7 @@ export class App extends Component {
         {this.state.contacts.length > 0 && (
           <Box display="flex" flexDirection="column">
             <Section title="Contact list" height="100%">
-              <ListOfContacts
-                onEditContact={this.onEditContact}
-                onDeleteContact={this.onDeleteContact}
-                contacts={filteredContacts}
-              ></ListOfContacts>
+              <ListOfContacts onEditContact={this.onEditContact} onDeleteContact={this.onDeleteContact} contacts={filteredContacts}></ListOfContacts>
             </Section>
           </Box>
         )}
