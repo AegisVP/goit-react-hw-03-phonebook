@@ -16,7 +16,7 @@ export const ListItem = styled.li`
   border-radius: 5px;
 
   :hover .number {
-    display:flex;
+    display: flex;
   }
 `;
 
@@ -25,8 +25,8 @@ export const Name = styled.p`
   display: 'flex';
   margin: ${p => p.theme.mp(0, 0, 0, 1)};
 
-  ::after{
-    content:"tel: ";
+  ::after {
+    content: 'tel: ';
     position: absolute;
     /* bottom: 0; */
     right: -35px;

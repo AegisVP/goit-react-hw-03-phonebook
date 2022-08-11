@@ -1,10 +1,10 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-export const FormikSelect = ({ formikSelected, onFormikSelect }) => (
+export const FormikSelect = ({ isSelected, onFormikSelect }) => (
   <label>
     Show Formik: &nbsp;
-    <input type="checkbox" name="formik" checked={formikSelected} onChange={onFormikSelect} />
+    <input type="checkbox" name="formik" checked={isSelected} onChange={onFormikSelect} />
   </label>
 );
 
